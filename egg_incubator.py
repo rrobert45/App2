@@ -47,15 +47,10 @@ humidity_threshold = 55
 
 # Initialize the GPIO pins
 GPIO.setmode(GPIO.BCM)
-
-initialized_pins = []
-
-def initialize_pin(pin_number):
-    if pin_number not in initialized_pins:
-        # Initialize the pin
-        GPIO.setup(pin_number,GPIO.OUT)
-        initialized_pins.append(pin_number)
-        print("Pin initialize = "+pin_number)
+GPIO.setup(egg_turner_relay_pin,GPIO.OUT)
+GPIO.setup(heat_relay_pin,GPIO.OUT)
+GPIO.setup(humidifier_relay_pin,GPIO.OUT)
+      
 
 
 last_read_time = None
@@ -192,7 +187,4 @@ def read_and_log_data():
 
 
 if __name__ == "__main__":
-    initialize_pin(17)
-    initialize_pin(18)
-    initialize_pin(27)
     read_and_log_data()
