@@ -26,7 +26,7 @@ sensor = Adafruit_DHT.DHT22
 pin = 4
 
 # Set the relay pin number
-egg_turner_relay_pin = 17
+egg_turner_relay_pin = 6
 heat_relay_pin = 18
 humidifier_relay_pin = 27
 
@@ -94,7 +94,8 @@ def eggTurner():
     day_in_cycle = day()
     if day_in_cycle <18:
         if last_relay_on is None:
-            last_relay_on = datetime.now()
+            GPIO.output(egg_turner_relay_pin, GPIO.LOW)
+            last_relay_on = current_time
         if GPIO.input(egg_turner_relay_pin) == 1:
             if current_time - last_relay_on >= timedelta(seconds=relay_interval):
                 # Turn on the relay for 2 minutes
