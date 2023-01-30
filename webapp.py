@@ -19,7 +19,7 @@ app = Flask(__name__, static_folder='static')
 
 @app.route("/")
 def index():
-        cursor = incubator.find().limit(48).sort("Time", -1)
+        cursor = incubator.find().limit(250).sort("Time", -1)
         historical_data = []
         for data in cursor:
             historical_data.append({

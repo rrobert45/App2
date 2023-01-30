@@ -174,7 +174,9 @@ def read_and_log_data():
             print("Last Egg roll: "+last_relay_on.strftime("%m-%d-%Y %I:%M %P"))
             print("Last Temperature Reading: "+str(temperature)+"F  Last Temperature Relay: "+temperature_relay_status)
             print("Last Humidity Reading: "+str(humidity)+"%  Last Humidity Relay: "+humidity_relay_status)
-            time.sleep(60)
+            print(" ")
+            print(" ")
+            time.sleep(300)
 
     except KeyboardInterrupt:
         pass
