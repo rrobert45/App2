@@ -55,6 +55,7 @@ def initialize_pin(pin_number):
         # Initialize the pin
         GPIO.setup(pin_number,GPIO.OUT)
         initialized_pins.append(pin_number)
+        print("Pin initialize = "+pin_number)
 
 
 last_read_time = None
@@ -163,15 +164,7 @@ def day():
     return day_in_cycle
 
 
-def get_last_logged_record():
-    last_record = incubator.find_one(sort=[("Time", -1)])
-    last_logged_record_time = datetime.strptime(get_last_logged_record(), "%m-%d-%Y %H:%M")  
-    timePassed = (datetime.now() - last_logged_record_time)
-    timePassed = timePassed.total_seconds()
-    if last_record is not None:
-        return timePassed
-    else:
-        return -1
+
 
 
 def read_and_log_data():
@@ -182,9 +175,12 @@ def read_and_log_data():
             control()
             last_relay_on = eggTurner()
             temperature, humidity = read_sensor_data()
-            if get_last_logged_record() < log_interval or get_last_logged_record() == -1:                
-                log_data(temperature, humidity, last_relay_on,temperature_relay_status,humidity_relay_status, day_in_cycle)
-            time.sleep(20)
+            log_data(temperature, humidity, last_relay_on,temperature_relay_status,humidity_relay_status, day_in_cycle)
+            print("Last Egg roll: "+last_relay_on)
+            print("Last Temperature Reading: "+temperature+"F  Last Temperature Relay: "+temperature_relay_status)
+            print("Last Humidity Reading: "+ +humidity+"%  Last Humidity Relay: "+humidity_relay_status)
+            time.sleep(60)
+
     except KeyboardInterrupt:
         pass
     finally:
