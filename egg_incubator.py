@@ -171,7 +171,7 @@ def read_and_log_data():
             last_relay_on = eggTurner()
             temperature, humidity = read_sensor_data()
             log_data(temperature, humidity, last_relay_on,temperature_relay_status,humidity_relay_status, day_in_cycle)
-            print("Last Egg roll: "+last_relay_on)
+            print("Last Egg roll: "+last_relay_on.strftime("%m-%d-%Y %I:%M %P"))
             print("Last Temperature Reading: "+temperature+"F  Last Temperature Relay: "+temperature_relay_status)
             print("Last Humidity Reading: "+ +humidity+"%  Last Humidity Relay: "+humidity_relay_status)
             time.sleep(60)
