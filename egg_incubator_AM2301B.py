@@ -1,12 +1,14 @@
 
 import time
 import Adafruit_DHT
-import Adafruit_AHT 
+
 import RPi.GPIO as GPIO
 from pymongo import MongoClient
 from datetime import datetime, timedelta
 import json
-
+import board
+import busio
+import adafruit_ahtx0
 
 with open('config.json') as config_file:
     config = json.load(config_file)
@@ -19,12 +21,13 @@ client = MongoClient(uri)
 db = client[config['database']]
 incubator = db[config['collection']]
 
-
+i2c = busio.I2C(board.SCL, board.SDA)
+aht = adafruit_ahtx0.AHTx0(i2c)
 
 
 # Set the sensor type (DHT22) and the GPIO pin number
 sensor = Adafruit_DHT.DHT22
-sensor2 = Adafruit_AHT.AHT20
+
 pin = 4
 AM2301_pin = 26
 clock_pin = 19
@@ -174,9 +177,6 @@ def read_and_log_data():
     try:
         while True:
             day_in_cycle = day()
-            humidity_backup, temperature_backup = Adafruit_AHT.read_retry(sensor2, AM2301_pin)
-            temperature_backup = round((temperature_backup * 9/5) + 32,1)
-            humidity_backup = round(humidity_backup,1)
             control()
             last_relay_on = eggTurner()
             temperature, humidity = read_sensor_data()
@@ -184,7 +184,10 @@ def read_and_log_data():
             print("Last Egg roll: "+last_relay_on.strftime("%m-%d-%Y %I:%M %P"))
             print("Last Temperature Reading: "+str(temperature)+"F  Last Temperature Relay: "+temperature_relay_status)
             print("Last Humidity Reading: "+str(humidity)+"%  Last Humidity Relay: "+humidity_relay_status)
-            print("backup Temp = "+temperature_backup+" Humidity Backup = "+ humidity_backup)
+            temperature2 = aht.temperature
+            humidity2 = aht.humidity
+            print("Temperature: {:.1f}°C".format(temperature2))
+            print("Humidity: {:.1f}%".format(humidity2))
             print(" ")
             print(" ")
             time.sleep(300)
