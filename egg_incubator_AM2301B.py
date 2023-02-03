@@ -1,7 +1,7 @@
 
 import time
 import Adafruit_DHT
-import Adafruit_AM2301
+import Adafruit_AHT 
 import RPi.GPIO as GPIO
 from pymongo import MongoClient
 from datetime import datetime, timedelta
@@ -24,6 +24,7 @@ incubator = db[config['collection']]
 
 # Set the sensor type (DHT22) and the GPIO pin number
 sensor = Adafruit_DHT.DHT22
+sensor2 = Adafruit_AHT.AHT20
 pin = 4
 AM2301_pin = 26
 clock_pin = 19
@@ -173,7 +174,7 @@ def read_and_log_data():
     try:
         while True:
             day_in_cycle = day()
-            humidity_backup, temperature_backup = Adafruit_AM2301.read(AM2301_pin)
+            humidity_backup, temperature_backup = Adafruit_AHT.read_retry(sensor2, AM2301_pin)
             temperature_backup = round((temperature_backup * 9/5) + 32,1)
             humidity_backup = round(humidity_backup,1)
             control()
