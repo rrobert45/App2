@@ -6,34 +6,46 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
 
-        function updateValue(variable) {
-            let newValue = null;
-            if (variable == "start_date") {
-                if (confirm("Updating start date will also clear the historical data. Are you sure you want to continue?")) {
-                    newValue = prompt("Enter the new value for " + variable);
-                }
-            } else {
-                newValue = prompt("Enter the new value for " + variable);
-            }
-            if (newValue != null) {
-                $.ajax({
-                    type: 'POST',
-                    url: '/update_settings',
-                    data: JSON.stringify({ variable: variable, value: newValue }),
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    success: function (response) {
-                        alert('Successfully updated ' + variable + ' to ' + newValue);
-                    }
-                });
-            }
-        }
-    </script>
 </head>
 
 <body class="bg-gradient-primary">
+    <!-- New Table for Statistical Information -->
+    <div class="col-12 mt-4">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary">Statistical Information</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Day in Egg Cycle</th>
+                            <th>Average Temperature (F)</th>
+                            <th>Temperature Standard Deviation</th>
+                            <th>Average Humidity (%)</th>
+                            <th>Humidity Standard Deviation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in data.egg_cycle_data %}
+                        <tr>
+                            <td>{{ data['Day in Egg Cycle'] }}</td>
+                            <td>{{ data['Average Temperature (F)'] }}</td>
+                            <td>{{ data['Temperature Standard Deviation'] }}</td>
+                            <td>{{ data['Average Humidity (%)'] }}</td>
+                            <td>{{ data['Humidity Standard Deviation'] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
