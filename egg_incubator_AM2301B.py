@@ -21,7 +21,7 @@ client = MongoClient(uri)
 db = client[config['database']]
 incubator = db[config['collection']]
 
-i2c = busio.I2C(board.GPIO19, board.GPIO26)
+i2c = busio.I2C(board.SCL, board.SDA)
 aht = adafruit_ahtx0.AHTx0(i2c)
 
 
