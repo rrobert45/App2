@@ -179,7 +179,7 @@ def read_and_log_data():
             print("Last Temperature Reading: "+str(temperature)+"F  Last Temperature Relay: "+temperature_relay_status)
             print("Last Humidity Reading: "+str(humidity)+"%  Last Humidity Relay: "+humidity_relay_status)
             temperature2 = aht.temperature
-            humidity2 = aht.humidity
+            humidity2 = humidity = aht.relative_humidity
             print("Temperature: {:.1f}°C".format(temperature2))
             print("Humidity: {:.1f}%".format(humidity2))
             print(" ")
