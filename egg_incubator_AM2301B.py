@@ -26,8 +26,7 @@ aht = adafruit_ahtx0.AHTx0(i2c)
 
 
 # Set the sensor type (DHT22) and the GPIO pin number
-sensor = Adafruit_DHT.DHT22
-
+sensor = adafruit_ahtx0.AHTx0(i2c)
 pin = 4
 AM2301_pin = 26
 clock_pin = 19
@@ -70,7 +69,8 @@ def read_sensor_data():
     global last_read_value
     if last_read_time is None or time.time() - last_read_time >= 4:
         # Read the humidity and temperature
-        humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+        temperature = aht.temperature
+        humidity = aht.humidity
         if humidity is not None and temperature is not None:
             temperature = (temperature * 9/5) + 32
             last_read_value = round(temperature,1), round(humidity,1)
