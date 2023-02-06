@@ -64,7 +64,7 @@ def read_sensor_data():
     if last_read_time is None or time.time() - last_read_time >= 4:
         # Read the humidity and temperature
         temperature = aht.temperature
-        humidity = aht.humidity
+        humidity = aht.relative_humidity
         if humidity is not None and temperature is not None:
             temperature = (temperature * 9/5) + 32
             last_read_value = round(temperature,1), round(humidity,1)
