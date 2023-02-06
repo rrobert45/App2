@@ -52,7 +52,6 @@ GPIO.setup(egg_turner_relay_pin,GPIO.OUT)
 GPIO.setup(heat_relay_pin,GPIO.OUT)
 GPIO.setup(humidifier_relay_pin,GPIO.OUT)
 
-GPIO.setup(clock_pin, GPIO.OUT)
       
 
 
