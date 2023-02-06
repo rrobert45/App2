@@ -1,7 +1,5 @@
 
 import time
-import Adafruit_DHT
-
 import RPi.GPIO as GPIO
 from pymongo import MongoClient
 from datetime import datetime, timedelta
@@ -26,10 +24,7 @@ aht = adafruit_ahtx0.AHTx0(i2c)
 
 
 # Set the sensor type (DHT22) and the GPIO pin number
-sensor = adafruit_ahtx0.AHTx0(i2c)
-pin = 4
-AM2301_pin = 26
-clock_pin = 19
+
 
 # Set the relay pin number
 egg_turner_relay_pin = 6
